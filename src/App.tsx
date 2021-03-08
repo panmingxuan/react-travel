@@ -1,55 +1,23 @@
 import React from 'react';
 import styles from './App.module.css';
-import { Row, Col, Typography } from 'antd';
-import { Header, Footer, Carousel, SideMenu, ProductCollertion, BusinessPartners } from './components';
-import { productList1, productList2, productList3 } from './mockups';
-import sideImage from './assets/images/sider_2019_12-09.png';
-import sideImage2 from './assets/images/sider_2019_02-04.png';
-import sideImage3 from './assets/images/sider_2019_02-04-2.png';
+import { HomePage, SignInPage, RegisterPage, DetailPage } from './pages';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 function App() {
   return (
     <div className={styles.App}>
-      <Header />
-      <div className={styles['page-content']}>
-        <Row style={{ marginTop: 20 }}>
-          <Col span={6}>
-            <SideMenu />
-          </Col>
-          <Col span={18}>
-            <Carousel />
-          </Col>
-        </Row>
-        <ProductCollertion
-          title={
-            <Typography.Title level={3} type='warning'>
-              爆款推荐
-            </Typography.Title>
-          }
-          sideImage={sideImage}
-          products={productList1}
-        />
-        <ProductCollertion
-          title={
-            <Typography.Title level={3} type='danger'>
-              新品上市
-            </Typography.Title>
-          }
-          sideImage={sideImage2}
-          products={productList2}
-        />
-        <ProductCollertion
-          title={
-            <Typography.Title level={3} type='secondary'>
-              国内旅游推荐
-            </Typography.Title>
-          }
-          sideImage={sideImage3}
-          products={productList3}
-        />
-      </div>
-      <BusinessPartners />
-      <Footer />
+      <BrowserRouter>
+        {/* 使用Switch组件解决BrowserRouter路由堆叠，
+            Switch组件每次只会匹配渲染一个路由组件
+        */}
+        <Switch>
+          <Route path='/' component={HomePage} exact />
+          <Route path='/signIn' component={SignInPage} />
+          <Route path='/register' component={RegisterPage} />
+          <Route path='/detail/:touristRouteId' component={DetailPage} />
+          <Route render={() => <h1>404 Not Found 页面去火星了！</h1>} />
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }
