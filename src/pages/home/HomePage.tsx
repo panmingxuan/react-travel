@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import styles from './HomePage.module.css';
 import { Row, Col, Typography } from 'antd';
-import { Header, Footer, Carousel, SideMenu, ProductCollertion, BusinessPartners } from '../../components';
+import { Header, Footer, Carousel, SideMenu, ProductCollection, BusinessPartners } from '../../components';
 import { productList1, productList2, productList3 } from './mockups';
 import sideImage from '../../assets/images/sider_2019_12-09.png';
 import sideImage2 from '../../assets/images/sider_2019_02-04.png';
 import sideImage3 from '../../assets/images/sider_2019_02-04-2.png';
+import { withTranslation, WithTranslation } from 'react-i18next';
 
-export class HomePage extends Component {
+//类组件使用高阶函数完成i18n功能
+class HomePageComponent extends Component<WithTranslation> {
   render() {
+    const { t } = this.props;
     return (
       <>
         <Header />
@@ -21,28 +24,28 @@ export class HomePage extends Component {
               <Carousel />
             </Col>
           </Row>
-          <ProductCollertion
+          <ProductCollection
             title={
               <Typography.Title level={3} type='warning'>
-                爆款推荐
+                {t('home_page.hot_recommended')}
               </Typography.Title>
             }
             sideImage={sideImage}
             products={productList1}
           />
-          <ProductCollertion
+          <ProductCollection
             title={
               <Typography.Title level={3} type='danger'>
-                新品上市
+                {t('home_page.new_arrival')}
               </Typography.Title>
             }
             sideImage={sideImage2}
             products={productList2}
           />
-          <ProductCollertion
+          <ProductCollection
             title={
               <Typography.Title level={3} type='secondary'>
-                国内旅游推荐
+                {t('home_page.domestic_travel')}
               </Typography.Title>
             }
             sideImage={sideImage3}
@@ -55,3 +58,4 @@ export class HomePage extends Component {
     );
   }
 }
+export const HomePage = withTranslation()(HomePageComponent);
