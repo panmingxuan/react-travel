@@ -1,4 +1,5 @@
 import i18n from 'i18next';
+import { CHANGE_LANGUAGE, ADD_LANGUAGE, LanguageActionType } from './languageActions';
 
 export interface LanguageState {
   language: 'en' | 'zh';
@@ -13,14 +14,14 @@ const defaultState: LanguageState = {
   ],
 };
 
-export default (state = defaultState, action) => {
+export default (state = defaultState, action: LanguageActionType) => {
   //switch语句完善Reducer功能
   switch (action.type) {
-    case 'change_language':
+    case CHANGE_LANGUAGE:
       //处理方式不标准，有副作用
       i18n.changeLanguage(action.payload);
       return { ...state, language: action.payload };
-    case 'add_language':
+    case ADD_LANGUAGE:
       return { ...state, languageList: [...state.languageList, action.payload] };
     default:
       return state;
