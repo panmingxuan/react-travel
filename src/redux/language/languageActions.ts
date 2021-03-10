@@ -1,5 +1,5 @@
-export const CHANGE_LANGUAGE = 'change_language';
-export const ADD_LANGUAGE = 'add_language';
+export const CHANGE_LANGUAGE = 'CHANGE_LANGUAGE';
+export const ADD_LANGUAGE = 'ADD_LANGUAGE';
 
 interface ChangeLanguageAction {
   type: typeof CHANGE_LANGUAGE;

@@ -7,42 +7,53 @@ import sideImage2 from '../../assets/images/sider_2019_02-04.png';
 import sideImage3 from '../../assets/images/sider_2019_02-04-2.png';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { Dispatch } from 'redux';
+import {
+  FetchRecommendProductsStartActionCreator,
+  FetchRecommendProductsSuccessActionCreator,
+  FetchRecommendProductsFailActionCreator,
+} from '../../redux/recommendProducts/recommendProductsAction';
 
-interface State {
-  loading: boolean;
-  error: string | null;
-  productList: any[];
-}
+const mapStateToProps = (state: RootState) => {
+  return {
+    loading: state.recommendProducts.loading,
+    error: state.recommendProducts.error,
+    productList: state.recommendProducts.productList,
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    fetchStart: () => {
+      dispatch(FetchRecommendProductsStartActionCreator());
+    },
+    fetchSuccess: (data) => {
+      dispatch(FetchRecommendProductsSuccessActionCreator(data));
+    },
+    fetchFail: (error) => {
+      dispatch(FetchRecommendProductsFailActionCreator(error));
+    },
+  };
+};
+
+type PropType = WithTranslation & ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
 //类组件使用高阶函数完成i18n功能
-class HomePageComponent extends Component<WithTranslation, State> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: true,
-      error: null,
-      productList: [],
-    };
-  }
+class HomePageComponent extends Component<PropType> {
   async componentDidMount() {
+    this.props.fetchStart();
     try {
       const { data } = await axios.get('http://123.56.149.216:8080/api/productCollections');
-      this.setState({
-        loading: false,
-        error: null,
-        productList: data,
-      });
+      this.props.fetchSuccess(data);
     } catch (error) {
-      this.setState({
-        error: error.message,
-        loading: false,
-      });
+      this.props.fetchFail(error.message);
     }
   }
 
   render() {
-    const { t } = this.props;
-    const { productList, loading, error } = this.state;
+    const { t, productList, loading, error } = this.props;
     if (loading) {
       return (
         <Spin
@@ -108,4 +119,4 @@ class HomePageComponent extends Component<WithTranslation, State> {
     );
   }
 }
-export const HomePage = withTranslation()(HomePageComponent);
+export const HomePage = connect(mapStateToProps, mapDispatchToProps)(withTranslation()(HomePageComponent));

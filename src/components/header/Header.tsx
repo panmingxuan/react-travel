@@ -14,9 +14,9 @@ export const Header: React.FC = () => {
   const history = useHistory();
 
   //获取store中的数据
-  const language = useSelector((state) => state.language);
+  const language = useSelector((state) => state.language.language);
 
-  const languageList = useSelector((state) => state.languageList);
+  const languageList = useSelector((state) => state.language.languageList);
   //获取dispatch
   const dispatch = useDispatch();
   //解构翻译文件

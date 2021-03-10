@@ -20,8 +20,8 @@ type PropsType = RouteComponentProps & //react-router的props类型
 //从store中传递过来的数据state
 const mapStateToProps = (state: RootState) => {
   return {
-    language: state.language,
-    languageList: state.languageList,
+    language: state.language.language,
+    languageList: state.language.languageList,
   };
 };
 
