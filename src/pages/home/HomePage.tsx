@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
 import styles from './HomePage.module.css';
 import { Row, Col, Typography, Spin } from 'antd';
-import { Header, Footer, Carousel, SideMenu, ProductCollection, BusinessPartners } from '../../components';
+import {
+  Header,
+  Footer,
+  Carousel,
+  SideMenu,
+  ProductCollection,
+  BusinessPartners,
+} from '../../components';
 import sideImage from '../../assets/images/sider_2019_12-09.png';
 import sideImage2 from '../../assets/images/sider_2019_02-04.png';
 import sideImage3 from '../../assets/images/sider_2019_02-04-2.png';
 import { withTranslation, WithTranslation } from 'react-i18next';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { Dispatch } from 'redux';
-import {
-  FetchRecommendProductsStartActionCreator,
-  FetchRecommendProductsSuccessActionCreator,
-  FetchRecommendProductsFailActionCreator,
-} from '../../redux/recommendProducts/recommendProductsAction';
+import { giveMeDataActionCreator } from '../../redux/recommendProducts/recommendProductsActions';
 
 const mapStateToProps = (state: RootState) => {
   return {
@@ -24,32 +25,22 @@ const mapStateToProps = (state: RootState) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    fetchStart: () => {
-      dispatch(FetchRecommendProductsStartActionCreator());
-    },
-    fetchSuccess: (data) => {
-      dispatch(FetchRecommendProductsSuccessActionCreator(data));
-    },
-    fetchFail: (error) => {
-      dispatch(FetchRecommendProductsFailActionCreator(error));
+    giveMeData: () => {
+      dispatch(giveMeDataActionCreator());
     },
   };
 };
 
-type PropType = WithTranslation & ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
+type PropType = WithTranslation &
+  ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 //类组件使用高阶函数完成i18n功能
 class HomePageComponent extends Component<PropType> {
-  async componentDidMount() {
-    this.props.fetchStart();
-    try {
-      const { data } = await axios.get('http://123.56.149.216:8080/api/productCollections');
-      this.props.fetchSuccess(data);
-    } catch (error) {
-      this.props.fetchFail(error.message);
-    }
+  componentDidMount() {
+    this.props.giveMeData();
   }
 
   render() {
@@ -119,4 +110,7 @@ class HomePageComponent extends Component<PropType> {
     );
   }
 }
-export const HomePage = connect(mapStateToProps, mapDispatchToProps)(withTranslation()(HomePageComponent));
+export const HomePage = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withTranslation()(HomePageComponent));
