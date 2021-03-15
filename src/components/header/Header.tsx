@@ -6,7 +6,10 @@ import { GlobalOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from '../../redux/hooks';
 import { useDispatch } from 'react-redux';
-import { addLanguageActionCreator, changeLanguageActionCreator } from '../../redux/language/languageActions';
+import {
+  addLanguageActionCreator,
+  changeLanguageActionCreator,
+} from '../../redux/language/languageActions';
 import { useTranslation } from 'react-i18next';
 
 //使用hook，简化高阶组件模式，更便捷的路由跳转
@@ -66,7 +69,11 @@ export const Header: React.FC = () => {
             {t('header.title')}
           </Typography.Title>
         </span>
-        <Input.Search placeholder={'请输入旅游目的地、主题或关键字'} className={styles['search-input']} />
+        <Input.Search
+          placeholder={'请输入旅游目的地、主题或关键字'}
+          className={styles['search-input']}
+          onSearch={(keywords) => history.push('/search/' + keywords)}
+        />
       </Layout.Header>
       <Menu mode={'horizontal'} className={styles['main-menu']}>
         <Menu.Item key={1}>{t('header.home_page')}</Menu.Item>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import styles from './HomePage.module.css';
 import { Row, Col, Typography, Spin } from 'antd';
 import {

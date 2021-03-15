@@ -1,6 +1,5 @@
-import React from 'react';
 import styles from './App.module.css';
-import { HomePage, SignInPage, RegisterPage, DetailPage } from './pages';
+import { HomePage, SignInPage, RegisterPage, DetailPage, SearchPage } from './pages';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 function App() {
@@ -15,6 +14,7 @@ function App() {
           <Route path='/signIn' component={SignInPage} />
           <Route path='/register' component={RegisterPage} />
           <Route path='/detail/:touristRouteId' component={DetailPage} />
+          <Route path='/search/:keywords?' component={SearchPage} />
           <Route render={() => <h1>404 Not Found 页面去火星了！</h1>} />
         </Switch>
       </BrowserRouter>
