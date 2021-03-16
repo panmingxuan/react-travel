@@ -1,6 +1,11 @@
 import styles from './SigInForm.module.css';
 
 import { Form, Input, Button, Checkbox } from 'antd';
+import { signIn } from '../../redux/user/slice';
+import { useDispatch } from 'react-redux';
+import { useSelector } from '../../redux/hooks';
+import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const layout = {
   labelCol: { span: 8 },
@@ -11,8 +16,28 @@ const tailLayout = {
 };
 
 export const SigInForm = () => {
+  const loading = useSelector((state) => state.user.loading);
+  const error = useSelector((state) => state.user.error);
+  const jwt = useSelector((state) => state.user.token);
+
+  const dispatch = useDispatch();
+
+  const history = useHistory();
+
+  useEffect(() => {
+    if (jwt !== null) {
+      history.push('/');
+    }
+  }, [jwt]);
+
   const onFinish = (values: any) => {
     console.log('Success:', values);
+    dispatch(
+      signIn({
+        email: values.username,
+        password: values.password,
+      })
+    );
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -49,7 +74,7 @@ export const SigInForm = () => {
       </Form.Item>
 
       <Form.Item {...tailLayout}>
-        <Button type='primary' htmlType='submit'>
+        <Button type='primary' htmlType='submit' loading={loading}>
           Submit
         </Button>
       </Form.Item>

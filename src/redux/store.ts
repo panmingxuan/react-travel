@@ -4,6 +4,7 @@ import recommendProductsReducer from './recommendProducts/recommendProductsReduc
 import { actionLog } from './middlewares/actionLog';
 import { productDetailSlice } from './productDetail/slice';
 import { productSearchSlice } from './productSearch/slice';
+import { userSlice } from './user/slice';
 
 //联合所有reducer
 const rootReducer = combineReducers({
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   recommendProducts: recommendProductsReducer,
   productDetail: productDetailSlice.reducer,
   productSearchSlice: productSearchSlice.reducer,
+  user: userSlice.reducer,
 });
 
 //增加redux-thunk 扩展dispatch支持函数类型的请求，完成异步请求action
