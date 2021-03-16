@@ -11,10 +11,10 @@ import axios from 'axios';
 axios.defaults.headers['x-icode'] = '363A095858EF4B1D';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );

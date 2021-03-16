@@ -1,14 +1,7 @@
 import { Component } from 'react';
-import styles from './HomePage.module.css';
 import { Row, Col, Typography, Spin } from 'antd';
-import {
-  Header,
-  Footer,
-  Carousel,
-  SideMenu,
-  ProductCollection,
-  BusinessPartners,
-} from '../../components';
+import { Carousel, SideMenu, ProductCollection, BusinessPartners } from '../../components';
+import { MainLayout } from '../../layouts/mainLayout';
 import sideImage from '../../assets/images/sider_2019_12-09.png';
 import sideImage2 from '../../assets/images/sider_2019_02-04.png';
 import sideImage3 from '../../assets/images/sider_2019_02-04-2.png';
@@ -66,8 +59,7 @@ class HomePageComponent extends Component<PropType> {
 
     return (
       <>
-        <Header />
-        <div className={styles['page-content']}>
+        <MainLayout>
           <Row style={{ marginTop: 20 }}>
             <Col span={6}>
               <SideMenu />
@@ -104,8 +96,7 @@ class HomePageComponent extends Component<PropType> {
             products={productList[2].touristRoutes}
           />
           <BusinessPartners />
-        </div>
-        <Footer />
+        </MainLayout>
       </>
     );
   }
