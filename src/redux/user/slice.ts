@@ -39,7 +39,14 @@ export const userSlice = createSlice({
   initialState,
   //捆绑action和reducer
   //reducer为对象
-  reducers: {},
+  reducers: {
+    //退出登录
+    logOut: (state) => {
+      state.token = null;
+      state.error = null;
+      state.loading = false;
+    },
+  },
   //扩展的reducer，存储异步action
   extraReducers: {
     [signIn.pending.type]: (state) => {
