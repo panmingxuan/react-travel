@@ -1,7 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { List, Rate, Space, Image, Tag, Typography } from "antd";
-import { MessageOutlined, LikeOutlined, StarOutlined } from "@ant-design/icons";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { List, Rate, Space, Image, Tag, Typography } from 'antd';
+import { MessageOutlined, LikeOutlined, StarOutlined } from '@ant-design/icons';
 
 const { Text } = Typography;
 
@@ -20,7 +20,7 @@ interface Product {
 }
 interface PropsType {
   data: Product[];
-  paging: any;
+  paging?: any;
   onPageChange?: (nextPage, pageSize) => void;
 }
 
@@ -31,10 +31,10 @@ const listData = (productList: Product[]) =>
     description: p.description,
     tags: (
       <>
-        {p.departureCity && <Tag color="#f50">{p.departureCity}出发</Tag>}
-        {p.travelDays && <Tag color="#108ee9">{p.travelDays} 天 </Tag>}
-        {p.discountPresent && <Tag color="#87d068">超低折扣</Tag>}
-        {p.tripType && <Tag color="#2db7f5">{p.tripType}</Tag>}
+        {p.departureCity && <Tag color='#f50'>{p.departureCity}出发</Tag>}
+        {p.travelDays && <Tag color='#108ee9'>{p.travelDays} 天 </Tag>}
+        {p.discountPresent && <Tag color='#87d068'>超低折扣</Tag>}
+        {p.tripType && <Tag color='#2db7f5'>{p.tripType}</Tag>}
       </>
     ),
     imgSrc: p.touristRoutePictures[0].url,
@@ -51,52 +51,44 @@ const IconText = ({ icon, text }) => (
   </Space>
 );
 
-export const ProductList: React.FC<PropsType> = ({
-  data,
-  paging,
-  onPageChange,
-}) => {
+export const ProductList: React.FC<PropsType> = ({ data, paging, onPageChange }) => {
   const products = listData(data);
   return (
     <List
-      itemLayout="vertical"
-      size="large"
-      pagination={{
-        current: paging.currentPage,
-        onChange: (page) => onPageChange && onPageChange(page, paging.pageSize),
-        pageSize: paging.pageSize,
-        total: paging.totalCount,
-      }}
+      itemLayout='vertical'
+      size='large'
+      pagination={
+        paging
+          ? {
+              current: paging.currentPage,
+              onChange: (page) => onPageChange && onPageChange(page, paging.pageSize),
+              pageSize: paging.pageSize,
+              total: paging.totalCount,
+            }
+          : false
+      }
       dataSource={products}
       footer={
-        <div>
-          搜索总路线: <Text strong>{paging.totalCount}</Text> 条
-        </div>
+        paging && (
+          <div>
+            搜索总路线: <Text strong>{paging.totalCount}</Text> 条
+          </div>
+        )
       }
       renderItem={(item) => (
         <List.Item
           key={item.title}
           actions={[
-            <IconText
-              icon={StarOutlined}
-              text="156"
-              key="list-vertical-star-o"
-            />,
-            <IconText
-              icon={LikeOutlined}
-              text="156"
-              key="list-vertical-like-o"
-            />,
+            <IconText icon={StarOutlined} text='156' key='list-vertical-star-o' />,
+            <IconText icon={LikeOutlined} text='156' key='list-vertical-like-o' />,
             <>
               <Rate defaultValue={3} />
-              <Text strong className="ant-rate-text">
+              <Text strong className='ant-rate-text'>
                 {item.rating}
               </Text>
             </>,
           ]}
-          extra={
-            <Image width={272} height={172} alt="image" src={item.imgSrc} />
-          }
+          extra={<Image width={272} height={172} alt='image' src={item.imgSrc} />}
         >
           <List.Item.Meta
             title={
@@ -106,20 +98,15 @@ export const ProductList: React.FC<PropsType> = ({
                     <Text style={{ fontSize: 20, fontWeight: 400 }} delete>
                       ¥ {item.originalPrice}
                     </Text>
-                    <Text
-                      type="danger"
-                      style={{ fontSize: 20, fontWeight: 400 }}
-                    >
-                      {" "}
+                    <Text type='danger' style={{ fontSize: 20, fontWeight: 400 }}>
+                      {' '}
                       ¥ {item.price}
                     </Text>
                   </>
                 ) : (
-                  <Text style={{ fontSize: 20, fontWeight: 400 }}>
-                    ¥ {item.price}
-                  </Text>
+                  <Text style={{ fontSize: 20, fontWeight: 400 }}>¥ {item.price}</Text>
                 )}
-                <Link to={"/detail/" + item.id}> {item.title}</Link>
+                <Link to={'/detail/' + item.id}> {item.title}</Link>
               </>
             }
             description={item.tags}

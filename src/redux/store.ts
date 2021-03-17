@@ -7,6 +7,8 @@ import { productSearchSlice } from './productSearch/slice';
 import { userSlice } from './user/slice';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { ShoppingCartSlice } from './shoppingCart/slice';
+import { orderSlice } from './order/slice';
 
 //创建持久化数据配置
 const persistConfig = {
@@ -22,6 +24,8 @@ const rootReducer = combineReducers({
   productDetail: productDetailSlice.reducer,
   productSearchSlice: productSearchSlice.reducer,
   user: userSlice.reducer,
+  shoppingCart: ShoppingCartSlice.reducer,
+  order: orderSlice.reducer,
 });
 
 //威力加强版的reducer

@@ -18,6 +18,7 @@
     "i18next": "^19.9.1",
     "jwt-decode": "^3.1.2",
     "react": "^17.0.1",
+    "react-credit-cards": "^0.8.3",
     "react-dom": "^17.0.1",
     "react-i18next": "^11.8.9",
     "react-redux": "^7.2.2",
