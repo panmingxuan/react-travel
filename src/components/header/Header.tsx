@@ -30,10 +30,14 @@ export const Header: React.FC = () => {
   const dispatch = useDispatch();
   //解构翻译文件
   const { t } = useTranslation();
-
+  //获取鉴权的token
   const jwt = useSelector((state) => state.user.token);
-
+  //设置主页用户名
   const [username, setUsername] = useState('');
+  //购物车数据
+  const shoppingCartItem = useSelector((state) => state.shoppingCart.items);
+
+  const shoppingCartLoading = useSelector((state) => state.shoppingCart.loading);
 
   useEffect(() => {
     if (jwt) {
@@ -85,8 +89,10 @@ export const Header: React.FC = () => {
                 {t('header.welcome')}
                 <Typography.Text strong>{username} </Typography.Text>
               </span>
-              <Button>{t('header.shoppingCart')}</Button>
-              <Button onClick={() => onLogout()}>{t('header.signOut')}</Button>
+              <Button loading={shoppingCartLoading} onClick={() => history.push('/shoppingCart')}>
+                {t('header.shoppingCart')}({shoppingCartItem.length})
+              </Button>
+              <Button onClick={onLogout}>{t('header.signOut')}</Button>
             </Button.Group>
           ) : (
             <Button.Group className={styles['button-group']}>

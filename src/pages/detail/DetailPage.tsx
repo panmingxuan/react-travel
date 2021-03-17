@@ -8,6 +8,9 @@ import { commentMockData } from './mockup';
 import { getProductDetail } from '../../redux/productDetail/slice';
 import { useSelector } from '../../redux/hooks';
 import { useDispatch } from 'react-redux';
+import { Button } from 'antd';
+import { ShoppingCartOutlined } from '@ant-design/icons';
+import { addShoppingCartItem } from '../../redux/shoppingCart/slice';
 
 const { RangePicker } = DatePicker;
 
@@ -23,6 +26,10 @@ export const DetailPage: React.FC<RouteComponentProps<MatchParams>> = (props) =>
   const product = useSelector((state) => state.productDetail.data);
 
   const dispatch = useDispatch();
+
+  const jwt = useSelector((state) => state.user.token) as string;
+
+  const shoppingCartLoading = useSelector((state) => state.shoppingCart.loading);
 
   //请求数据
   useEffect(() => {
@@ -69,6 +76,18 @@ export const DetailPage: React.FC<RouteComponentProps<MatchParams>> = (props) =>
             />
           </Col>
           <Col span={11}>
+            <Button
+              style={{ marginTop: 50, marginBottom: 30, display: 'block' }}
+              type='primary'
+              danger
+              loading={shoppingCartLoading}
+              onClick={() => {
+                dispatch(addShoppingCartItem({ jwt, touristRouteId: product.id }));
+              }}
+            >
+              <ShoppingCartOutlined />
+              放入购物车
+            </Button>
             <RangePicker open style={{ marginTop: 20 }} />
           </Col>
         </Row>
